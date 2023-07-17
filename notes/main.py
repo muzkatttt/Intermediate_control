@@ -4,13 +4,12 @@
 Программа должна уметь создавать заметку, сохранять её, читать список заметок,
 редактировать заметку, удалять заметку.
 """
+from notes.controller.Controller import Controller
 
-#from controller.Controller import Controller
 
 def main():
-    print('this is my project')
-    #controller = Controller()
-    #controller.start()
+    controller = Controller()
+    controller.start()
 
 
 if __name__ == '__main__':
