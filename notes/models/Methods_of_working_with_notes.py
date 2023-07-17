@@ -31,3 +31,22 @@ class Methods_of_working_with_notes(Abstract_methods):
     def delete_note(self):
         pass
 
+    def select_action(self):
+        match self.__note:
+            case '1':
+                return self.create_note()
+
+            case '2':
+                return self.save_notes()
+
+            case '3':
+                return self.read_notes()
+
+            case '4':
+                return self.edit_note()
+
+            case '5':
+                return self.delete_note()
+
+            case _:
+                raise Exception
