@@ -1,6 +1,6 @@
 from typing import Any, NoReturn
 
-from notes.models.Methods_of_working_with_notes import Methods_of_working_with_notes
+from notes.models.Methods import Methods_of_working_with_notes
 from notes.view.View import View
 
 
