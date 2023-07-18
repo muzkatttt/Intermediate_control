@@ -1,6 +1,6 @@
 from typing import Any, NoReturn
 
-from notes.models.Methods import Methods_of_working_with_notes
+from notes.models.Methods import Methods
 from notes.view.View import View
 
 
@@ -9,7 +9,7 @@ class Controller:
     __view: Any
 
     def __init__(self) -> object:
-        self.model = Methods_of_working_with_notes()
+        self.model = Methods()
         self.view = View()
 
     @property
@@ -29,12 +29,11 @@ class Controller:
         self.__view = view
 
     def start(self) -> NoReturn:
-        values = self.view.input_from_user()
-        result = self.model(*values).get_result()
-        self.view.print_result(result)
+        #from_user = ''
+        # while from_user != '7':
+            View.menu()
+            from_user = input().strip()
+            if from_user == '1':
+                # вчера закончила работу здесь, доделать 19.07
+                pass
 
-    # def ask_for_log(self):
-    #     if self.log_result == '':
-    #         return
-    #     log_result = Logger(self.log_result)
-    #     log_result.ask_from_user('Cохранить в log.txt? [y/n]\n')

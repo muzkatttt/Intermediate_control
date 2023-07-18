@@ -1,10 +1,12 @@
 import datetime
 import uuid
+from abc import ABC
 
 from notes.models.Abstract_methods import Abstract_methods
+from notes.view.View import View
 
 
-class Methods(Abstract_methods):
+class Notes(Abstract_methods, ABC):
     __id_note: str
     __title_note: str
     __msg: str
@@ -56,23 +58,62 @@ class Methods(Abstract_methods):
         return 'Id ' + self.get_id_note() + ';\n Тема заметки >>> \n' + self.get_title_note() + \
             ';\n Заметка >>> \n' + self.get_msg() + ';\n Дата >>> \n' + self.__date_note()
 
-"""
-    def create_note(self):
-        # return f = open('note.txt', 'w')
-        pass
 
-    def save_notes(self):
-        pass
+class Methods(Abstract_methods):
 
-    def read_notes(self):
-        pass
+    def add_note(self, number):
+        note = View.create_note(number)
+        array = Work_file.read_doc()
+        for notes in array:
+            if Notes.get_id_note(note) == Notes.get_id_note(notes):
+                Notes.set_id_note(note)
+        array.append(note)
+        Work_file.write_doc(array, 'a')
+        print('Заметка добавлена')
 
-    def edit_note(self):
-        pass
+    def show(self, text):
+        flag = True
+        array = Work_file.read_doc()
+        if text == 'date':
+            date = input('Введите дату заметки в формате дд.мм.гггг: >>> ')
+        for notes in array:
+            if text == 'all':
+                flag = False
+                print(Notes.print_note(notes))
+            if text == 'id_note':
+                flag = False
+                print('Id заметки: ' + Notes.get_id_note(notes))
+            if text == 'date':
+                flag == False
+                if date in Notes.get_date_note(notes):
+                    print(Notes.print_note(notes))
+        if flag == True:
+            print('Заметок не найдено')
 
-    def delete_note(self):
-        pass
+    def edit_note(self, text):
+        id_note = input('Введите Id заметки >>> ')
+        array = Work_file.read_doc()
+        flag = True
+        for notes in array:
+            if id_note == Notes.get_id_note(notes):
+                flag = False
+                if text == 'edit_note':
+                    note = View.create_note()
+                    Notes.set_title_note(notes, note.get_title_note())
+                    Notes.set_msg(notes, note.get_msg)
+                    Notes.set_date_note(notes)
+                    print('Изменения внесены')
+                if text == 'delete':
+                    array.remove(notes)
+                    print('Удалено успешно')
+                if text == 'show':
+                    print(Notes.print_note(notes))
+        if flag == True:
+            print('Заметки нет, введите корректный Id и повторите ввод')
+        Work_file.write_doc(array, 'a')
 
+
+    # TO DO - подумать, куда вставить match case по выбору действия с заметками
     def select_action(self):
         match self.__note:
             case '1':
@@ -93,4 +134,28 @@ class Methods(Abstract_methods):
             case _:
                 raise Exception
 
-"""
+
+class Work_file():
+
+    def write_doc(self, array, mode):
+        f = open('notes.csv', mode='w', encoding='utf-8')
+        f.seek(1)
+        f.close()
+        f.open('notes.csv', mode=mode, encoding='utf-8')
+        for note in array:
+            f.write(Notes.to_string(note))
+            f.write('\n')
+        f.close()
+
+    def read_doc(self):
+        try:
+            array = []
+            f = open('notes.csv', 'r', encoding='utf-8')
+            notes = f.read().strip().split('\n')
+            for i in notes:
+                str_split = i.split('.')
+                note = Notes(id_note=str_split[0], title_note=str_split[1], msg=str_split[2], date_note=str_split[3])
+        except Exception:
+            print('Сохраненных заметок не найдено')
+        finally:
+            return array
