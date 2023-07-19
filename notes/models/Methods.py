@@ -3,7 +3,7 @@ import uuid
 from abc import ABC
 
 from notes.models.Abstract_methods import Abstract_methods
-from notes.view.View import View
+import notes.view.View
 
 
 class Notes(Abstract_methods, ABC):
@@ -112,27 +112,6 @@ class Methods(Abstract_methods):
             print('Заметки нет, введите корректный Id и повторите ввод')
         Work_file.write_doc(array, 'a')
 
-
-    # TO DO - подумать, куда вставить match case по выбору действия с заметками
-    def select_action(self):
-        match self.__note:
-            case '1':
-                return self.create_note()
-
-            case '2':
-                return self.save_notes()
-
-            case '3':
-                return self.read_notes()
-
-            case '4':
-                return self.edit_note()
-
-            case '5':
-                return self.delete_note()
-
-            case _:
-                raise Exception
 
 
 class Work_file():
