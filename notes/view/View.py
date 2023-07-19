@@ -1,4 +1,4 @@
-from notes.models.Methods import Notes
+import notes.models.Methods
 
 
 class View:
@@ -8,12 +8,13 @@ class View:
                 'save_notes - 2 \n'
                 'read_notes - 3 \n'
                 'edit_note - 4 \n'
-                'delete_note - 5: >>> \n')
+                'delete_note - 5 \n'
+                'show -6 : \n >>> ')
 
     def create_note(self, number):
         title_note = self.enter_text_to_note(input('Title >>> '), number)
         msg = self.enter_text_to_note(input('Enter message >>> '), number)
-        return Notes(title_note=title_note, msg=msg)
+        return notes.Methods(title_note=title_note, msg=msg)
 
 
     @staticmethod
