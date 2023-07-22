@@ -2,6 +2,7 @@ import datetime
 import uuid
 from abc import ABC
 
+from notes import view
 from notes.models.Abstract_methods import Abstract_methods
 import notes.view.View
 
@@ -59,46 +60,46 @@ class Notes(Abstract_methods, ABC):
             ';\n Заметка >>> \n' + self.get_msg() + ';\n Дата >>> \n' + self.__date_note()
 
 
-class Methods(Abstract_methods):
+class Methods(Abstract_methods, ABC):
 
-    def add_note(self, number):
-        note = View.create_note(number)
-        array = Work_file.read_doc()
+    def add_note(self):
+        note: None = view.create_note(self)
+        array = Work_file.read_doc
         for notes in array:
-            if Notes.get_id_note(note) == Notes.get_id_note(notes):
+            if get_id_note(note) == get_id_note(notes):
                 Notes.set_id_note(note)
         array.append(note)
-        Work_file.write_doc(array, 'a')
+        Work_file.write_doc(self, array, 'a')
         print('Заметка добавлена')
 
     def show(self, text):
         flag = True
-        array = Work_file.read_doc()
+        array = Work_file.read_doc
         if text == 'date':
             date = input('Введите дату заметки в формате дд.мм.гггг: >>> ')
-        for notes in array:
-            if text == 'all':
-                flag = False
-                print(Notes.print_note(notes))
-            if text == 'id_note':
-                flag = False
-                print('Id заметки: ' + Notes.get_id_note(notes))
-            if text == 'date':
-                flag == False
-                if date in Notes.get_date_note(notes):
+            for notes in array:
+                if text == 'all':
+                    flag = False
                     print(Notes.print_note(notes))
-        if flag == True:
+                if text == 'id_note':
+                    flag = False
+                    print('Id заметки: ' + get_id_note(notes))
+                if text == 'date':
+                    flag = False
+                    if date in get_date_note(notes):
+                        print(print_note(notes))
+        if flag:
             print('Заметок не найдено')
 
-    def edit_note(self, text):
+    def edit_note(self):
         id_note = input('Введите Id заметки >>> ')
-        array = Work_file.read_doc()
+        array = Work_file.read_doc
         flag = True
         for notes in array:
             if id_note == Notes.get_id_note(notes):
                 flag = False
                 if text == 'edit_note':
-                    note = View.create_note()
+                    note = View.create_note
                     Notes.set_title_note(notes, note.get_title_note())
                     Notes.set_msg(notes, note.get_msg)
                     Notes.set_date_note(notes)
@@ -108,24 +109,24 @@ class Methods(Abstract_methods):
                     print('Удалено успешно')
                 if text == 'show':
                     print(Notes.print_note(notes))
-        if flag == True:
+        if flag:
             print('Заметки нет, введите корректный Id и повторите ввод')
         Work_file.write_doc(array, 'a')
-
-
 
 class Work_file():
 
     def write_doc(self, array, mode):
-        f = open('notes.csv', mode='w', encoding='utf-8')
-        f.seek(1)
-        f.close()
+        array = []
+        #f = open('notes.csv', mode='w', encoding='utf-8')
+        # f.seek(1)
+        #f.close()
         f.open('notes.csv', mode=mode, encoding='utf-8')
         for note in array:
-            f.write(Notes.to_string(note))
+            f.write(to_string(note))
             f.write('\n')
         f.close()
 
+    @property
     def read_doc(self):
         try:
             array = []
@@ -137,4 +138,4 @@ class Work_file():
         except Exception:
             print('Сохраненных заметок не найдено')
         finally:
-            return array
+            return note
