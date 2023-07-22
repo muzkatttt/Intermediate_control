@@ -1,5 +1,5 @@
 from typing import Any
-
+from notes import models
 from notes.models.Methods import Methods
 from notes.view.View import View
 
@@ -8,8 +8,8 @@ class Controller:
     __model: Any
     __view: Any
 
-    def __init__(self) -> object:
-        self.model = Methods()
+    def __init__(self):
+        self.model = models.Methods
         self.view = View()
 
     @property
@@ -28,26 +28,63 @@ class Controller:
     def view(self, view: Any):
         self.__view = view
 
+    @property
     def start(self):
-        from_user = ''
-        while from_user != '6':
+        choice = ''
+        '''
+        while choice != '0':
             View.menu()
-            from_user = input().strip()
-            match from_user:
+            choice = input().strip()
+            if choice == '1':
+                Methods.add_note(self)
+
+            if choice == '2':
+                Methods.show(self)
+                Methods.edit_note(self)
+
+            if choice == '3':
+                Methods.show(self)
+                Methods.delete_note(self)
+
+            if choice == '4':
+                Methods.show(self)
+                Methods.show(self)
+
+            if choice == '5':
+                Methods.show(self)
+                Methods.show(self)
+
+            if choice == '0':
+                View.ending(self)
+                break
+'''
+        while choice != '0':
+            View.menu()
+            choice = input().strip()
+            match choice:
                 case '1':
-                    return self.add_note()
+                    Methods.add_note(self)
+                    return 'notes.csv'
 
                 case '2':
-                    return self.save_notes()
+                    Methods.show(self)
+                    return Methods.edit_note(self)
 
                 case '3':
-                    return self.edit_note()
+                    Methods.show(self)
+                    return Methods.delete_note(self)
 
                 case '4':
-                    return self.delete_note()
+                    Methods.show(self)
+                    return Methods.show(self)
 
                 case '5':
-                    return self.show()
+                    Methods.show(self)
+                    return Methods.show(self)
+
+                case '0':
+                    View.ending(self)
+                    break
 
                 case _:
                     raise Exception

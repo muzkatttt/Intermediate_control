@@ -4,16 +4,17 @@ import notes.models.Methods
 class View:
     @staticmethod
     def menu():
-        print('Выберите действие (add_note - 1 \n '
-                'save_notes - 2 \n'
-                'read_notes - 3 \n'
-                'edit_note - 4 \n'
-                'delete_note - 5 \n'
-                'show -6 : \n >>> ')
+        print('Выберите действие \nДобавить заметку >>> 1 \n'
+                'Редактировать заметку >>> 2 \n'
+                'Удалить заметку >>> 3 \n'
+                'Показать все заметки по дате добавления >>> 4 \n'
+                'Показать все заметки по Id >>> 5 \n'
+                'Закрыть программу >>> 0 \n >>> ')
 
-    def create_note(self, number):
-        title_note = self.enter_text_to_note(input('Title >>> '), number)
-        msg = self.enter_text_to_note(input('Enter message >>> '), number)
+
+    def create_note(self):
+        title_note = self.enter_text_to_note(input('Title >>> '))
+        msg = self.enter_text_to_note(input('Enter message >>> '))
         return notes.Methods(title_note=title_note, msg=msg)
 
 
