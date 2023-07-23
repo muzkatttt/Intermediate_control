@@ -1,8 +1,7 @@
 import datetime
 import uuid
 from abc import ABC, abstractmethod
-
-import view
+import pandas as pd
 
 
 class Abstract(ABC):
@@ -47,7 +46,7 @@ class Abstract(ABC):
         pass
 
 class Notes(Abstract):
-    def __init__(self, title_note, msg, date_note):
+    def __init__(self, title_note, msg):
         super().__init__()
         self.id_note = str(uuid.UUID()[0:3])
         self.title_note = title_note
@@ -82,29 +81,15 @@ class Notes(Abstract):
         return self.id_note + ';\n' + self.title_note + ';\n' + self.msg + ';\n' + self.date_note
     def __repr__(self):
         return 'Id ' + self.id_note + ';\n Тема заметки >>> \n' + self.title_note + \
-            ';\n Заметка >>> \n' + self.msg + ';\n Дата >>> \n' + self.date_note
+            ';\n Дата >>> \n' + self.date_note
 
-class WorkFile():
-    def write(self, array, mode):
-        array = []
-        #f = open('notes.csv', mode='w', encoding='utf-8')
-        # f.seek(1)
-        #f.close()
-        f.open('notes.csv', mode=mode, encoding='utf-8')
-        for note in array:
-            f.write(str(note))
-            f.write('\n')
-        f.close()
+class WorkFile:
+    def write(self, note: Notes):
+        df = pd.read_csv('notes.csv')
+        # добавить условие "существует ли заметка?"
+        df.to_csv('notes.csv', mode='a', header=False, index=False)
 
     def read(self):
-        try:
-            array = []
-            f = open('notes.csv', 'r', encoding='utf-8')
-            notes = f.read().strip().split('\n')
-            for i in notes:
-                str_split = i.split(';')
-                note = Notes(id_note=str_split[0], title_note=str_split[1], msg=str_split[2], date_note=str_split[3])
-        except Exception:
-            print('Сохраненных заметок не найдено')
-        finally:
-            return note
+        note = pd.read_csv('notes.csv')
+        print(repr(note))
+

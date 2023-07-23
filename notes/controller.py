@@ -1,14 +1,17 @@
+from datetime import datetime
 from typing import Any
-from view import View
+from notes.models import Note
+
+import models
+import view
+
 
 
 class Controller:
-    __model: Any
-    __view: Any
 
     def __init__(self):
-        self.model = Methods
-        self.view = View()
+        self.model = Note
+        self.view = view.View()
 
     @property
     def model(self) -> Any:
@@ -26,110 +29,77 @@ class Controller:
     def view(self, view: Any):
         self.__view = view
 
+    def add_note(self, note):
+        note: None = self.view.create()
+        array = self.model.read()
+        array.append(note)
+        self.model.write(array, 'a')
+        print('Заметка добавлена')
+
+    def show(self, note):
+        array = self.model.read()
+        choice = ''
+        match choice:
+            case 'all':
+                print(array)
+            case 'id_note':
+                print(sorted(array))
+            case 'date':
+                datetime.sort(array)
+                print(array)
+            case _:
+                print('Сортировка не задана')
+
+    def edit(self, note, flag=None):
+        flag == True
+        id_note = input('Введите Id заметки >>> ')
+        array = self.model.read()
+        if flag == id_note(note):
+            input('редактировать заголовок заметки - 1\n'
+                'редактировать заметку - 2\n'
+                'удалить заметку - 3\n >>> ')
+            choice = ''
+            match choice:
+                case '1':
+                    title_note = input('Введите заголовок \n>>> ')
+                    array.append(title_note)
+                case '2':
+                    msg = input('Введите текст заметки \n>>> ')
+                    array.append(msg)
+                case '3':
+                    array.remove(note)
+                case _:
+                    print('Данных недостаточно')
+
     def start(self):
         choice = ''
-        '''
         while choice != '0':
-            View.menu()
-            choice = input().strip()
-            if choice == '1':
-                Methods.add_note(self)
-
-            if choice == '2':
-                Methods.show(self)
-                Methods.edit_note(self)
-
-            if choice == '3':
-                Methods.show(self)
-                Methods.delete_note(self)
-
-            if choice == '4':
-                Methods.show(self)
-                Methods.show(self)
-
-            if choice == '5':
-                Methods.show(self)
-                Methods.show(self)
-
-            if choice == '0':
-                View.ending(self)
-                break
-'''
-        while choice != '0':
-            View.menu()
+            self.view.menu()
             choice = input().strip()
             match choice:
                 case '1':
-                    Methods.add_note(self)
+                    self.model.add_note()
                     return 'notes.csv'
 
                 case '2':
-                    Methods.show(self)
-                    return Methods.edit_note(self)
+                    self.model.show()
+                    return self.model.edit_note()
 
                 case '3':
-                    Methods.show(self)
-                    return Methods.delete_note(self)
+                    self.model.show()
+                    return self.model.delete_note()
 
                 case '4':
-                    Methods.show(self)
-                    return Methods.show(self)
+                    self.model.show()
+                    return self.model.show('date')
 
                 case '5':
-                    Methods.show(self)
-                    return Methods.show(self)
+                    self.model.show(text='id_note')
+                    return self.model.show('id_note')
 
                 case '0':
-                    View.ending(self)
+                    self.view.ending()
                     break
 
                 case _:
                     raise Exception
-
-    def add_note():
-        note: None = create_note()
-        array = Work_file.read_doc
-        array.append(note)
-        Work_file.write_doc(array, 'a')
-        print('Заметка добавлена')
-
-    def show(self, text):
-        flag = True
-        array = Work_file.read_doc
-        if text == 'date':
-            date = input('Введите дату заметки в формате дд.мм.гггг: >>> ')
-            for notes in array:
-                if text == 'all':
-                    flag = False
-                    print(Notes.print_note)
-                if text == 'id_note':
-                    flag = False
-                    print('Id заметки: ' + get_id_note(notes))
-                if text == 'date':
-                    flag = False
-                    if date in get_date_note(notes):
-                        print(print_note(notes))
-        if flag:
-            print('Заметок не найдено')
-
-    def edit_note(self):
-        id_note = input('Введите Id заметки >>> ')
-        array = Work_file.read_doc
-        flag = True
-        for notes in array:
-            if id_note == get_id_note(notes):
-                flag = False
-                if text == 'edit_note':
-                    note = create_note()
-                    Notes.set_title_note(notes, note.get_title_note())
-                    Notes.set_msg(notes, note.get_msg)
-                    Notes.set_date_note(notes)
-                    print('Изменения внесены')
-                if text == 'delete':
-                    array.remove(notes)
-                    print('Удалено успешно')
-                if text == 'show':
-                    print(Notes.print_note)
-        if flag:
-            print('Заметки нет, введите корректный Id и повторите ввод')
-        Work_file.write_doc(array, 'a')
