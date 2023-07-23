@@ -1,7 +1,5 @@
 from typing import Any
-from notes import models
-from notes.models.Methods import Methods
-from notes.view.View import View
+from view import View
 
 
 class Controller:
@@ -9,7 +7,7 @@ class Controller:
     __view: Any
 
     def __init__(self):
-        self.model = models.Methods
+        self.model = Methods
         self.view = View()
 
     @property
@@ -28,7 +26,6 @@ class Controller:
     def view(self, view: Any):
         self.__view = view
 
-    @property
     def start(self):
         choice = ''
         '''
@@ -88,3 +85,51 @@ class Controller:
 
                 case _:
                     raise Exception
+
+    def add_note():
+        note: None = create_note()
+        array = Work_file.read_doc
+        array.append(note)
+        Work_file.write_doc(array, 'a')
+        print('Заметка добавлена')
+
+    def show(self, text):
+        flag = True
+        array = Work_file.read_doc
+        if text == 'date':
+            date = input('Введите дату заметки в формате дд.мм.гггг: >>> ')
+            for notes in array:
+                if text == 'all':
+                    flag = False
+                    print(Notes.print_note)
+                if text == 'id_note':
+                    flag = False
+                    print('Id заметки: ' + get_id_note(notes))
+                if text == 'date':
+                    flag = False
+                    if date in get_date_note(notes):
+                        print(print_note(notes))
+        if flag:
+            print('Заметок не найдено')
+
+    def edit_note(self):
+        id_note = input('Введите Id заметки >>> ')
+        array = Work_file.read_doc
+        flag = True
+        for notes in array:
+            if id_note == get_id_note(notes):
+                flag = False
+                if text == 'edit_note':
+                    note = create_note()
+                    Notes.set_title_note(notes, note.get_title_note())
+                    Notes.set_msg(notes, note.get_msg)
+                    Notes.set_date_note(notes)
+                    print('Изменения внесены')
+                if text == 'delete':
+                    array.remove(notes)
+                    print('Удалено успешно')
+                if text == 'show':
+                    print(Notes.print_note)
+        if flag:
+            print('Заметки нет, введите корректный Id и повторите ввод')
+        Work_file.write_doc(array, 'a')

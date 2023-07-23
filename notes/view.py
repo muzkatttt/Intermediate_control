@@ -1,4 +1,4 @@
-import notes.models.Methods
+from models import Methods
 
 
 class View:
@@ -13,16 +13,11 @@ class View:
 
 
     def create_note(self):
-        title_note = self.enter_text_to_note(input('Title >>> '))
-        msg = self.enter_text_to_note(input('Enter message >>> '))
-        return notes.Methods(title_note=title_note, msg=msg)
+        title_note = self.enter_text_to_note(input('Введите заголовок >>> '))
+        msg = self.enter_text_to_note(input('Введите заметку >>> '))
+        return Methods(title_note=title_note, msg=msg)
 
 
     @staticmethod
-    def enter_text_to_note(text):
-        while len(text) <= 10:
-            print('Введите заметку')
-            text = input('Введите текст >>>\n')
-
-    def ending(self):
-        print('Приложение Notes закрыто')
+    def ending(text: str = 'Приложение Notes закрыто'):
+        print(text)
