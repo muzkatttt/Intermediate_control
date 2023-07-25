@@ -85,11 +85,14 @@ class Notes(Abstract):
 
 class WorkFile:
     def write(self, note: Notes):
+        file = 'notes.csv'
+        file = open()
         df = pd.read_csv('notes.csv')
         # добавить условие "существует ли заметка?"
+        # добавить note в Dataframe и сохранить Dataframe в файл с тем же именем
         df.to_csv('notes.csv', mode='a', header=False, index=False)
 
     def read(self):
-        note = pd.read_csv('notes.csv')
-        print(repr(note))
+        return pd.read_csv('notes.csv')
+
 

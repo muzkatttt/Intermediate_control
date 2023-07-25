@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Any
-from notes.models import Note
+
+from notes import models
 
 import models
 import view
@@ -10,7 +11,7 @@ import view
 class Controller:
 
     def __init__(self):
-        self.model = Note
+        self.model: models = models
         self.view = view.View()
 
     @property
@@ -31,17 +32,15 @@ class Controller:
 
     def add_note(self, note):
         note: None = self.view.create()
-        array = self.model.read()
-        array.append(note)
-        self.model.write(array, 'a')
+        self.model.WorkFile().write(note)
         print('Заметка добавлена')
 
     def show(self, note):
-        array = self.model.read()
+        array = self.model.WorkFile().read()
         choice = ''
         match choice:
             case 'all':
-                print(array)
+                self.view.ending(array)
             case 'id_note':
                 print(sorted(array))
             case 'date':
