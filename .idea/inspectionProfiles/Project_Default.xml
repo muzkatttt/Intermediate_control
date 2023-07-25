@@ -1,0 +1,20 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="random.random.randint" />
+          <option value="models.MathematicalOperations.Calculate.results" />
+          <option value="main.__a" />
+          <option value="main.__b" />
+          <option value="notes.models.Methods.View" />
+          <option value="notes.models.Methods.*" />
+          <option value="notes.Methods" />
+          <option value="object.append" />
+          <option value="datetime.datetime.sort" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
