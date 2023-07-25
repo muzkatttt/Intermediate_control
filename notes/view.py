@@ -1,5 +1,3 @@
-from models import Methods
-
 
 class View:
     @staticmethod
@@ -12,10 +10,10 @@ class View:
                 'Закрыть программу >>> 0 \n >>> ')
 
 
-    def create_note(self):
-        title_note = self.enter_text_to_note(input('Введите заголовок >>> '))
-        msg = self.enter_text_to_note(input('Введите заметку >>> '))
-        return Methods(title_note=title_note, msg=msg)
+    def create(self):
+        title_note = input('Введите заголовок >>> ')
+        msg = input('Введите заметку >>> ')
+        return title_note, msg
 
 
     @staticmethod
