@@ -1,104 +1,78 @@
-from datetime import datetime
-from typing import Any
-
-from notes import models
-
-import models
-import view
-
+import repository
+import note
 
 
 class Controller:
+    def __init__(self, _repository):
+        self.__repository = _repository
 
-    def __init__(self):
-        self.model: models = models
-        self.view = view.View()
+    def read_note(self, note_id):
+        if isinstance(self.__repository, repository.Repository):
+            notes = self.__repository.get_all_notes()
+            for _note in notes:
+                if isinstance(_note, note.Note):
+                    if _note.get_id() == note_id:
+                        return _note
+                else:
+                    print('Ошибка при чтении заметки!')
+        else:
+            print('Ошибка 1')
+        print('Заметка не найдена!')
 
-    @property
-    def model(self) -> Any:
-        return self.__model
+    def read_notes(self):
+        if isinstance(self.__repository, repository.Repository):
+            return self.__repository.get_all_notes()
+        else:
+            print('Ошибка 2!')
 
-    @model.setter
-    def model(self, model: Any):
-        self.__model = model
+    def validate_note_data(self, _note):
+        if isinstance(_note, note.Note):
+            if not _note.get_title() or not _note.get_msg() or not _note.get_date():
+                print('Поля заметки пустые')
+                return False
+            else:
+                return True
+        else:
+            print('Ошибка 3!')
+            return False
 
-    @property
-    def view(self) -> Any:
-        return self.__view
+    def save_note(self, _note):
+        if Controller.validate_note_data(self, _note):
+            if isinstance(self.__repository, repository.Repository):
+                self.__repository.create_note(_note)
+                print('Заметка сохранена')
+            else:
+                print('Ошибка 4!')
 
-    @view.setter
-    def view(self, view: Any):
-        self.__view = view
+    def delete_note(self, note_id):
+        if isinstance(self.__repository, repository.Repository):
+            self.__repository.delete_note(note_id)
+        else:
+            print('Ошибка 5!')
 
-    def add_note(self, note):
-        note: None = self.view.create()
-        self.model.WorkFile().write(note)
-        print('Заметка добавлена')
+    def edit_note(self, _note):
+        if Controller.validate_note_data(self, _note):
+            if isinstance(self.__repository, repository.Repository):
+                self.__repository.edit_note(_note)
+            else:
+                print('Ошибка 6!')
 
-    def show(self, note):
-        array = self.model.WorkFile().read()
-        choice = ''
-        match choice:
-            case 'all':
-                self.view.ending(array)
-            case 'id_note':
-                print(sorted(array))
-            case 'date':
-                datetime.sort(array)
-                print(array)
-            case _:
-                print('Сортировка не задана')
-
-    def edit(self, note, flag=None):
-        flag == True
-        id_note = input('Введите Id заметки >>> ')
-        array = self.model.read()
-        if flag == id_note(note):
-            input('редактировать заголовок заметки - 1\n'
-                'редактировать заметку - 2\n'
-                'удалить заметку - 3\n >>> ')
-            choice = ''
-            match choice:
-                case '1':
-                    title_note = input('Введите заголовок \n>>> ')
-                    array.append(title_note)
-                case '2':
-                    msg = input('Введите текст заметки \n>>> ')
-                    array.append(msg)
-                case '3':
-                    array.remove(note)
-                case _:
-                    print('Данных недостаточно')
-
-    def start(self):
-        choice = ''
-        while choice != '0':
-            self.view.menu()
-            choice = input().strip()
-            match choice:
-                case '1':
-                    self.model.add_note()
-                    return 'notes.csv'
-
-                case '2':
-                    self.model.show()
-                    return self.model.edit_note()
-
-                case '3':
-                    self.model.show()
-                    return self.model.delete_note()
-
-                case '4':
-                    self.model.show()
-                    return self.model.show('date')
-
-                case '5':
-                    self.model.show(text='id_note')
-                    return self.model.show('id_note')
-
-                case '0':
-                    self.view.ending()
-                    break
-
-                case _:
-                    raise Exception
+    def find_notes_by_date(self, date_start, date_end):
+        if isinstance(self.__repository, repository.Repository):
+            notes = self.__repository.get_all_notes()
+            if date_start > date_end:
+                tmp = date_start
+                date_start = date_end
+                date_end = tmp
+            find_notes = []
+            for _note in notes:
+                if isinstance(_note, note.Note):
+                    if date_start <= _note.get_date() <= date_end:
+                        find_notes.append(_note)
+                else:
+                    print('Ошибка 7!')
+            if not find_notes:
+                print('Заметка не найдена!')
+            return find_notes
+        else:
+            print('Ошибка 8!')
