@@ -1,5 +1,5 @@
-import repository
-import note
+from notes import repository
+from notes import note
 
 
 class Controller:

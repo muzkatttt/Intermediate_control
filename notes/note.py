@@ -30,8 +30,8 @@ class Note:
         return self.__date_modified
 
     def __str__(self):
-        return 'ID: ' + self.__id_note + '. Title: ' + self.__title + '. Message: ' + self.__msg + \
-            '. Date modified: ' + self.__date_modified
+        return 'ID: ' + self.__id_note + '. Заголовок: ' + self.__title + '. Текст заметки: ' + self.__msg + \
+            '. Дата последнего изменения: ' + self.__date_modified
 
     def __lt__(self, other):
         return self.__date_modified < other.get_date()
