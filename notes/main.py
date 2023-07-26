@@ -4,13 +4,16 @@
 Программа должна уметь создавать заметку, сохранять её, читать список заметок,
 редактировать заметку, удалять заметку.
 """
-from controller import Controller
-
+from notes import repository
+from notes import controller, file_operation
+from notes import view
 
 def main():
-    controller = Controller()
-    controller.start()
-
+    file = file_operation.FileOperation('../notes.csv')
+    repo = repository.Repository(file)
+    _controller = controller.Controller(repo)
+    _view = view.View(_controller)
+    _view.run()
 
 if __name__ == '__main__':
     main()
