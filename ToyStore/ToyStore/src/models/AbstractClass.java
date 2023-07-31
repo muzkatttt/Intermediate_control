@@ -6,13 +6,16 @@ public class AbstractClass {
 
     int count;
 
-    double frequency;
+    int frequency;
 
-    public AbstractClass(int id, String name, int count, double frequency) {
+    public AbstractClass(int id, String name, int count, int frequency) {
         this.id = id;
         this.name = name;
         this.count = count;
         this.frequency = frequency;
+    }
+
+    public AbstractClass() {
     }
 
     public int getId() {
@@ -20,7 +23,7 @@ public class AbstractClass {
     }
 
     public void setId(int id) {
-        this.id = id;
+
     }
 
     public String getName() {
@@ -28,7 +31,7 @@ public class AbstractClass {
     }
 
     public void setName(String name) {
-        this.name = name;
+
     }
 
     public int getCount() {
@@ -39,11 +42,11 @@ public class AbstractClass {
         this.count = count;
     }
 
-    public double getFrequency() {
+    public int getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(double frequency) {
+    public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
 }

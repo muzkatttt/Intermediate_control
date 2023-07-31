@@ -1,7 +1,8 @@
 package toyInterface;
 
-public interface ToyInterface {
-    void AddToys(int id, String name, int count, double frequency);
+import models.Models;
 
+public interface ToyInterface {
+    Models addToys(int id, String name, int count, int frequency);
 
 }
