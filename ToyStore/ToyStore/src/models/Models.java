@@ -1,20 +1,20 @@
 package models;
 
-public class Models extends AbstractClass implements Comparable<Models>{
-    Models(int id, String name, int count, int frequency) {
+public class Models extends AbstractClass{
+    public Models(int id, String name, int count, int frequency) {
         setId(id);
         setName(name);
         setCount(count);
         setFrequency(frequency);
     }
-
+/*
     public Models() {
         this.id = 0;
         this.name = " ";
         this.count = 0;
         this.frequency = 0;
     }
-
+*/
     @Override
     public int getId() {
         return super.getId();
@@ -58,11 +58,7 @@ public class Models extends AbstractClass implements Comparable<Models>{
     @Override
     public String toString() {
         return "ID игрушки: " + getId() + ". Название игрушки: " + getName() +
-                ". Количество игрушек: " + getCount() + ".";
+                ". Количество игрушек: " + getCount() + "\n";
     }
 
-    @Override
-    public int compareTo(Models o) {
-        return frequency;
-    }
 }

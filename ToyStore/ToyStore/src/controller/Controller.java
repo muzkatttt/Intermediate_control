@@ -13,4 +13,8 @@ public class Controller {
         return view.addToys(id, name, count, frequency);
     }
 
+    @Override
+    public String toString() {
+        return "игрушки не найдены";
+    }
 }
