@@ -15,4 +15,9 @@ public class View implements ToyInterface {
         toy.setFrequency(frequency);
         return toy;
     }
+
+    @Override
+    public String toString() {
+        return "Игрушка >>> " + models.Models.class.toString() + "\n";
+    }
 }

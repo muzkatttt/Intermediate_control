@@ -1,28 +1,33 @@
 package models;
+import toyInterface.ToyInterface;
 
-public class Models extends AbstractClass{
+public class Models extends AbstractClass implements ToyInterface, Comparable<Models> {
+
     public Models(int id, String name, int count, int frequency) {
+        this.id = id;
+        this.name = name;
+        this.count = count;
+        this.frequency = frequency;
+    }
+
+    public Models(int id, String name, int count) {
         setId(id);
         setName(name);
         setCount(count);
-        setFrequency(frequency);
     }
-/*
+
     public Models() {
-        this.id = 0;
-        this.name = " ";
-        this.count = 0;
-        this.frequency = 0;
     }
-*/
+
     @Override
     public int getId() {
         return super.getId();
     }
 
     @Override
-    public void setId(int id) {
+    public int setId(int id) {
         super.setId(id);
+        return id;
     }
 
     @Override
@@ -58,7 +63,20 @@ public class Models extends AbstractClass{
     @Override
     public String toString() {
         return "ID игрушки: " + getId() + ". Название игрушки: " + getName() +
-                ". Количество игрушек: " + getCount() + "\n";
+                ". Вероятность выпадения: " + getFrequency() + "\n";
     }
 
+    @Override
+    public Models addToys(int id, String name, int count, int frequency) {
+        return null;
+    }
+
+    @Override
+    public int compareTo(Models o) {
+        return sorted(getFrequency());
+    }
+
+    private int sorted(int frequency) {
+        return sorted(frequency);
+    }
 }
